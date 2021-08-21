@@ -4,6 +4,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include "board.h"
+
 char *SimplifyFEN(char* FEN);
 
 int main(void)
@@ -16,9 +18,9 @@ int main(void)
     
     SetTargetFPS(144);
 
-    char FEN[90] = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
-    char simple[90] = "rnbqkbnrpppppppp                                PPPPPPPPRNBQKBNRwKQkq-01";
-    printf("Simple FEN: %s\n", simple);
+    char FEN[90] = "rnbqkbnr/pp1ppppp/8/2p5/4P3/5N2/PPPP1PPP/RNBQKB1R b KQkq - 1 2";
+    board b = FENtoBoard(FEN);
+
     // gameplay loop
     while (!WindowShouldClose())
     {
@@ -38,6 +40,14 @@ int main(void)
 
             // show fps
             DrawFPS(0, 0);
+
+            // get position from clipboard
+            if (IsKeyPressed(KEY_V))
+            {
+                char *clipboard = GetClipboardText();
+                b = FENtoBoard(clipboard);
+            }
+            
 
             // draw the chess board
             bool flip = true; // square color
@@ -72,12 +82,11 @@ int main(void)
                         {
                             DrawRectangle(sx, sy, scale, scale, GREEN);
                         }
-                        
                     }
 
                     // drawtext breaks without \0
                     char formatted[2];
-                    formatted[0] = simple[x + 8 * y];
+                    formatted[0] = b.pieces[x][y];
                     formatted[1] = '\0';
                     DrawText(formatted, sx + scale / 4, sy, scale, WHITE);
                 }
@@ -85,39 +94,43 @@ int main(void)
         EndDrawing();
     }
     
-    free(simple);
     CloseWindow();
 
     return 0;
 }
 
-char *SimplifyFEN(char* fen)
+board FENtoBoard(char *fen)
 {
-    int i = 0; // to iterate through FEN
-    char *simple = malloc(90);
-    int j = 0; // to iterate through simple
-    while (i != 0)
+    board converted;
+    // simplify the FEN
+    char simple[64];
+    int i = 0;
+    int j = 0;
+    while (fen[i] != ' ')
     {
-        /*if (i == '/')
+        if (isalpha(fen[i]))
         {
-            // do nothing
+            simple[j] = fen[i];
+            j++;
         }
         else if (isdigit(fen[i]))
         {
-            // add that amount of spaces to simple
+            int c = fen[i] - '0';
+            for (int d = 0; d < c; d++)
+            {
+                simple[j] = ' ';
+                j++;
+            }
         }
-        else
-        {
-            // copy over
-            simple[j] = fen[i];
-            j++;
-        }*/
-        //simple[i] = fen[i];
         i++;
     }
-    simple[0] = 'H';
-    simple[1] = 'I';
-    simple[2] = '!';
-    simple[3] = '\0';
-    return simple;
+    
+    for (int x = 0; x < 8; x++)
+    {
+        for (int y = 0; y < 8; y++)
+        {
+            converted.pieces[x][y] = simple[(x + 8 * y)];
+        }
+    }
+    return converted;
 }
