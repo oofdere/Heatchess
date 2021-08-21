@@ -32,6 +32,13 @@ int main(void)
                 screenHeight = GetScreenHeight();
             }
 
+            // keep mouse position up to date
+            int MouseX = GetMouseX();
+            int MouseY = GetMouseY();
+
+            // show fps
+            DrawFPS(0, 0);
+
             // draw the chess board
             bool flip = true; // square color
             float scale = screenHeight / 8; // size of squares
@@ -54,6 +61,12 @@ int main(void)
                         flip = true;
                     }
                     
+                    // mouse logic
+                    if (MouseX > sx && MouseX < sx + scale && MouseY > sy && MouseY < sy + scale)
+                    {
+                        DrawRectangle(sx, sy, scale, scale, GREEN);
+                    }
+
                     // drawtext breaks without \0
                     char formatted[2];
                     formatted[0] = simple[x + 8 * y];
