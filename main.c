@@ -1,4 +1,10 @@
 #include <raylib.h>
+#include <string.h>
+#include <ctype.h>
+#include <stdio.h>
+#include <stdlib.h>
+
+char *SimplifyFEN(char* FEN);
 
 int main(void)
 {
@@ -10,6 +16,9 @@ int main(void)
     
     SetTargetFPS(144);
 
+    char FEN[90] = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
+    char simple[90] = "rnbqkbnrpppppppp                                PPPPPPPPRNBQKBNRwKQkq-01";
+    printf("Simple FEN: %s\n", simple);
     // gameplay loop
     while (!WindowShouldClose())
     {
@@ -44,12 +53,50 @@ int main(void)
                         DrawRectangle(sx, sy, scale, scale, BLACK);
                         flip = true;
                     }
+                    
+                    // drawtext breaks without \0
+                    char formatted[2];
+                    formatted[0] = simple[x + 8 * y];
+                    formatted[1] = '\0';
+                    DrawText(formatted, sx + scale / 4, sy, scale, WHITE);
                 }
             }
         EndDrawing();
     }
     
+    free(simple);
     CloseWindow();
 
     return 0;
+}
+
+char *SimplifyFEN(char* fen)
+{
+    int i = 0; // to iterate through FEN
+    char *simple = malloc(90);
+    int j = 0; // to iterate through simple
+    while (i != 0)
+    {
+        /*if (i == '/')
+        {
+            // do nothing
+        }
+        else if (isdigit(fen[i]))
+        {
+            // add that amount of spaces to simple
+        }
+        else
+        {
+            // copy over
+            simple[j] = fen[i];
+            j++;
+        }*/
+        //simple[i] = fen[i];
+        i++;
+    }
+    simple[0] = 'H';
+    simple[1] = 'I';
+    simple[2] = '!';
+    simple[3] = '\0';
+    return simple;
 }
