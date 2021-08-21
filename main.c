@@ -64,7 +64,15 @@ int main(void)
                     // mouse logic
                     if (MouseX > sx && MouseX < sx + scale && MouseY > sy && MouseY < sy + scale)
                     {
-                        DrawRectangle(sx, sy, scale, scale, GREEN);
+                        if (IsMouseButtonDown(3))
+                        {
+                            DrawRectangle(sx, sy, scale, scale, BLUE);
+                        }
+                        else
+                        {
+                            DrawRectangle(sx, sy, scale, scale, GREEN);
+                        }
+                        
                     }
 
                     // drawtext breaks without \0
