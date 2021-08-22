@@ -96,21 +96,28 @@ int main(void)
                     // drawtext breaks without \0
                     if (b.pieces[x][y] != ' ')
                     {
-                        char formatted[2];
-                        formatted[0] = b.pieces[x][y];
-                        formatted[1] = '\0';
-                        DrawText(formatted, sx + scale / 4, sy, scale, WHITE);
-                        Vector2 pos;
-                        pos.x = 0;
-                        pos.y = 0;
+                        if (IsKeyDown(KEY_SPACE))
+                        {
+                            char formatted[2];
+                            formatted[0] = b.pieces[x][y];
+                            formatted[1] = '\0';
+                            DrawText(formatted, sx + scale / 4, sy, scale, RED);
+                        }
+                        else
+                        {
+                            Vector2 pos;
+                            pos.x = 0;
+                            pos.y = 0;
+                            Texture2D texture = DrawPiece(b.pieces[x][y]);
+                            Rectangle texturebounds;
+                            texturebounds.x = 0;
+                            texturebounds.y = 0;
+                            texturebounds.height = texture.height;
+                            texturebounds.width = texture.width;
+                            DrawTexturePro(texture, texturebounds, rect, pos, 0, WHITE);
+                        }
                         
-                        Texture2D texture = DrawPiece(b.pieces[x][y]);
-                        Rectangle texturebounds;
-                        texturebounds.x = 0;
-                        texturebounds.y = 0;
-                        texturebounds.height = texture.height;
-                        texturebounds.width = texture.width;
-                        DrawTexturePro(texture, texturebounds, rect, pos, 0, WHITE);
+                        
                     } 
                 }
             }
