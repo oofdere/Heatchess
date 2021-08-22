@@ -6,7 +6,7 @@ typedef struct board
     char pieces[8][8];
 }board;
 
-const int epic = 90;
-
 board FENtoBoard(char *fen);
+void LoadTextures(void);
+Texture2D DrawPiece(char p);
 #endif
