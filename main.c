@@ -21,6 +21,10 @@ int main(void)
     char FEN[90] = "rnbqkbnr/pp1ppppp/8/2p5/4P3/5N2/PPPP1PPP/RNBQKB1R b KQkq - 1 2";
     board b = FENtoBoard(FEN);
 
+    bool SelectionActive = false;
+    int SelectionX = 0;
+    int SelectionY = 0;
+
     // load images
     LoadTextures();
 
@@ -85,13 +89,31 @@ int main(void)
                     {
                         if (IsMouseButtonDown(3))
                         {
-                            DrawRectangle(sx, sy, scale, scale, BLUE);
+                            if (SelectionActive)
+                            {
+                                //b.pieces[x][y] = b.pieces[SelectionX][SelectionY];
+                                //b.pieces[SelectionX][SelectionY] = ' ';
+                                SelectionActive = false;
+                            }
+                            else
+                            {
+                                SelectionX = x;
+                                SelectionY = y;
+                                SelectionActive = true;
+                            }
                         }
                         else
                         {
                             DrawRectangle(sx, sy, scale, scale, GREEN);
                         }
                     }
+
+                    // selection logic
+                    if (SelectionActive && x == SelectionX && y == SelectionY)
+                    {
+                        DrawRectangle(sx, sy, scale, scale, BLUE);
+                    }
+                    
 
                     // drawtext breaks without \0
                     if (b.pieces[x][y] != ' ')
