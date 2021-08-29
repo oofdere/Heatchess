@@ -1,0 +1,2 @@
+# Remove Makefile from language calcuation.
+Makefile linguist-detectable=false
