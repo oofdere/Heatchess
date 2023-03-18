@@ -1,41 +1,38 @@
-# Heatchess
-The hottest chess client around.
+# create-svelte
 
-## Current state of the codebase
-This code is only a simple proof of concept to demonstrate the idea. It is a somewhat useless codebase, as I hadn't thought about the architecture of this program beforehand and got straight into coding. So this is just a simple demo in its current state. Pieces cannot move. **It touches memory it shouldn't.** You can load a board by putting a FEN into the clipboard and pressing  `v` in the game window.
-## Goals
- - [ ] Modular architecture with first-class plugin support.
- - [ ] Launcher with auto-update and plugin manager.
- - [ ] Works on Linux, Windows, Android, and in the web browser.
- - [ ] Arbitrary board and piece definitions.
- - [ ] Suckless, while not being intimidating for normies.
- - [ ] 2D and 3D rendering support.
- - [ ] UCI engine support.
- - [ ] P2P multiplayer support over WebRTC/WebSockets/similar.
-## Architecture
- - board.h
- - board.c
- - pieces/
-   - pawn.h
-   - rook.h
-   - knight.h
-   - bishop.h
-   - queen.h
-   - king.h
- - logic/
-   - piece.h
-   - piece.c
- - graphics/
-   - menu.h
-   - menu.c
- - multiplayer/
- - plugins/
- - launcher/
-   - update.c
-   - mods.c
-   - 
- - main.c
- - Makefile
+Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/master/packages/create-svelte).
 
-## License
-TODO: Choose a license
+## Creating a project
+
+If you're seeing this, you've probably already done this step. Congrats!
+
+```bash
+# create a new project in the current directory
+npm create svelte@latest
+
+# create a new project in my-app
+npm create svelte@latest my-app
+```
+
+## Developing
+
+Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+
+```bash
+npm run dev
+
+# or start the server and open the app in a new browser tab
+npm run dev -- --open
+```
+
+## Building
+
+To create a production version of your app:
+
+```bash
+npm run build
+```
+
+You can preview the production build with `npm run preview`.
+
+> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
